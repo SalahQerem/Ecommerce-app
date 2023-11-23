@@ -1,0 +1,4 @@
+.dropdown-menu[data-bs-popper] {
+    top: 125% !important;
+    left: -25px !important;
+}

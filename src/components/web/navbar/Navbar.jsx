@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './navbar.css'
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg bg-primary-subtle">
       <div className="container">
       <a className="navbar-brand" href="#">T-shop</a>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,12 +32,12 @@ function Navbar() {
         <ul className="navbar-nav">
         <li className="nav-item dropdown">
         <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Dropdown
+          Account
         </a>
-        <ul className="dropdown-menu ">
-          <li><Link className="dropdown-item" to='/register'>register</Link></li>
+        <ul className="dropdown-menu">
+          <li><Link className="dropdown-item" to='/register'>Register</Link></li>
           <li><hr className="dropdown-divider" /></li>
-          <li><a className="dropdown-item" href="#">login</a></li>
+          <li><a className="dropdown-item" href="#">Login</a></li>
         </ul>
       </li>
         </ul>
