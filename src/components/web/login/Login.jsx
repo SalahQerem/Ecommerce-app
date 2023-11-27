@@ -1,31 +1,26 @@
 import React from 'react'
 import Input from '../../pages/Input.jsx';
 import { useFormik } from 'formik';
-import './register.css'
-import { registerSchema } from '../validation/validation.js'
+import '../register/register.css'
+import { loginSchema } from '../validation/validation.js'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-function Register() {
-
+function Login({saveCurrentUser}) {
+    const navigate = useNavigate();
     const initialValues = {
-        userName: '',
         email: '',
         password: '',
-        image: '',
     }
 
     const onSubmit = async (user) => {
-        const formData = new FormData();
-        formData.append("userName", user.name);
-        formData.append("email", user.email);
-        formData.append("password", user.password);
-        formData.append("image", user.image);
 
-        const {data} = await axios.post('https://ecommerce-node4.vercel.app/auth/signup', formData);
+        const {data} = await axios.post('https://ecommerce-node4.vercel.app/auth/signin', user);
         if(data.message == "success"){
-            formik.resetForm();
-            toast.success('Account created successfully, please varify your email', {
+            localStorage.setItem("userToken", data.token);
+            saveCurrentUser();
+            toast.success('Login successful', {
                 position: "top-left",
                 autoClose: false,
                 hideProgressBar: false,
@@ -35,27 +30,17 @@ function Register() {
                 progress: undefined,
                 theme: "light",
             });
+            navigate('/home');
         }
     }
 
     const formik = useFormik({
         initialValues,
         onSubmit,
-        validationSchema:registerSchema,
+        validationSchema:loginSchema,
     })
-
-    const handleImageChange = (event) => {
-        formik.setFieldValue('image', event.target.files[0]);
-    }
  
     const inputs = [
-        {
-            id: 'username',
-            type: 'text',
-            name: 'userName',
-            title: 'Username',
-            value: formik.values.userName,
-        },
         {
             id:"email",
             type: "email",
@@ -70,13 +55,6 @@ function Register() {
             title: 'Password',
             value: formik.values.password,
         },
-        {
-            id: 'image',
-            type: 'file',
-            name: 'image',
-            title: 'user image',
-            onChange: handleImageChange,
-        }
     ];
 
     const renderInputs = inputs.map((input, index) => 
@@ -88,7 +66,7 @@ function Register() {
             key={index} 
             errors={formik.errors}
             touched={formik.touched}
-            onChange={input.onChange || formik.handleChange} 
+            onChange={formik.handleChange} 
             onBlur={formik.handleBlur}
         />
     );
@@ -97,14 +75,14 @@ function Register() {
   return (
     <div className='content container d-flex align-items-center justify-content-center'>
         <div className='bg-primary-subtle w-50 p-5 rounded-5'>
-            <h2 className='text-center'>Create Account</h2>
-            <form onSubmit={formik.handleSubmit} encType='multipart/from-data'>
+            <h2 className='text-center'>Login</h2>
+            <form onSubmit={formik.handleSubmit}>
                 {renderInputs}
-                <button className='btn btn-primary' disabled={!formik.isValid}>Register</button>
+                <button className='btn btn-primary' disabled={!formik.isValid}>Login</button>
             </form>
         </div>
     </div>
   )
 }
 
-export default Register
+export default Login

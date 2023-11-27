@@ -1,8 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './navbar.css'
 
-function Navbar() {
+function Navbar({user, setUser}) {
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("userToken");
+    setUser(null);
+    navigate("/home");
+  }
+
   return (
     <nav className="navbar navbar-expand-lg bg-primary-subtle">
       <div className="container">
@@ -25,8 +34,10 @@ function Navbar() {
 
           <li className="nav-item">
           <a className="nav-link" href="#">Products</a>
-        </li>
-       
+          </li> 
+          {user ?<li className="nav-item">
+          <a className="nav-link" href="#">Cart</a>
+          </li> : <></>}
        
         </ul>
         <ul className="navbar-nav">
@@ -35,9 +46,19 @@ function Navbar() {
           Account
         </a>
         <ul className="dropdown-menu">
-          <li><Link className="dropdown-item" to='/register'>Register</Link></li>
-          <li><hr className="dropdown-divider" /></li>
-          <li><a className="dropdown-item" href="#">Login</a></li>
+          {!user ? 
+          <>
+            <li><Link className="dropdown-item" to='/register'>Register</Link></li>
+            <li><hr className="dropdown-divider" /></li>
+            <li><Link className="dropdown-item" to='/login'>Login</Link></li>
+          </> : 
+          <>
+            <li><Link className="dropdown-item" to=''>Profile</Link></li>
+            <li><hr className="dropdown-divider" /></li>
+            <li><Link className="dropdown-item" onClick={logout}>Logout</Link></li>
+          </>
+          }
+          
         </ul>
       </li>
         </ul>
