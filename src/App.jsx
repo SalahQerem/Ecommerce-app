@@ -32,7 +32,7 @@ function App() {
       element: <Layout user={user}/>,
       children:[
         {
-          path: 'home',
+          index:true,
           element: <Home />
         },
         {

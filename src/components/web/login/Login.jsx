@@ -16,7 +16,7 @@ function Login({saveCurrentUser}) {
 
     const onSubmit = async (user) => {
 
-        const {data} = await axios.post('https://ecommerce-node4.vercel.app/auth/signin', user);
+        const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signin`, user);
         if(data.message == "success"){
             localStorage.setItem("userToken", data.token);
             saveCurrentUser();
@@ -30,7 +30,7 @@ function Login({saveCurrentUser}) {
                 progress: undefined,
                 theme: "light",
             });
-            navigate('/home');
+            navigate('/');
         }
     }
 
