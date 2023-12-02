@@ -10,6 +10,9 @@ import { createBrowserRouter } from "react-router-dom";
 import Register from "./components/web/register/Register.jsx";
 import Login from "./components/web/login/Login.jsx";
 import { jwtDecode } from 'jwt-decode';
+import CategoryDatails from './components/web/categories/CategoryDetails.jsx';
+import Product from './components/web/product/Product.jsx';
+
 function App() {
 
   const [user, setUser] = useState(null);
@@ -37,7 +40,15 @@ function App() {
         },
         {
           path: 'categories',
-          element: <Categories/>
+          element: <Categories/>,
+        },
+        {
+          path: 'products/category/:categoryId',
+          element: <CategoryDatails />
+        },
+        {
+          path: 'product/:productId',
+          element: <Product />
         },
         {
           path: 'register',
