@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Input from '../../pages/Input.jsx';
 import { useFormik } from 'formik';
 import '../register/register.css'
@@ -6,8 +6,10 @@ import { loginSchema } from '../validation/validation.js'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/user.jsx';
 
-function Login({saveCurrentUser}) {
+function Login() {
+    let {setUserToken} = useContext(UserContext);
     const navigate = useNavigate();
     const initialValues = {
         email: '',
@@ -16,13 +18,14 @@ function Login({saveCurrentUser}) {
 
     const onSubmit = async (user) => {
 
+        
         const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signin`, user);
         if(data.message == "success"){
             localStorage.setItem("userToken", data.token);
-            saveCurrentUser();
+            setUserToken(data.token);
             toast.success('Login successful', {
                 position: "top-left",
-                autoClose: false,
+                autoClose: true,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,

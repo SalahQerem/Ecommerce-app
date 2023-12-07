@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './navbar.css'
+import { UserContext } from '../context/user.jsx';
 
-function Navbar({user, setUser}) {
-
+function Navbar () {
+  let {userToken, setUserToken, userData, setUserData} = useContext(UserContext);
   const navigate = useNavigate();
 
   const logout = () => {
     localStorage.removeItem("userToken");
-    setUser(null);
+    setUserToken(null);
+    setUserData(null);
     navigate("/");
   }
 
@@ -35,25 +37,25 @@ function Navbar({user, setUser}) {
           <li className="nav-item">
           <a className="nav-link" href="#">Products</a>
           </li> 
-          {user ?<li className="nav-item">
-          <a className="nav-link" href="#">Cart</a>
+          {userToken ?<li className="nav-item">
+          <Link className="nav-link" to={"/cart"}>Cart</Link>
           </li> : <></>}
        
         </ul>
         <ul className="navbar-nav">
         <li className="nav-item dropdown">
         <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Account
+          {userData != null ? userData.user.role : 'Account'}
         </a>
         <ul className="dropdown-menu">
-          {!user ? 
+          {!userToken ? 
           <>
             <li><Link className="dropdown-item" to='/register'>Register</Link></li>
             <li><hr className="dropdown-divider" /></li>
             <li><Link className="dropdown-item" to='/login'>Login</Link></li>
           </> : 
           <>
-            <li><Link className="dropdown-item" to=''>Profile</Link></li>
+            <li><Link className="dropdown-item" to={`/user/profile/${userData != null ? userData.user._id : ''}`}>Profile</Link></li>
             <li><hr className="dropdown-divider" /></li>
             <li><Link className="dropdown-item" onClick={logout}>Logout</Link></li>
           </>

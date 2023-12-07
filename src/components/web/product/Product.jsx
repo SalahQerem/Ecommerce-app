@@ -1,25 +1,30 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useContext } from 'react'
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom'
 import Loader from '../../pages/Loader.jsx';
 import ReactImageMagnify from 'react-image-magnify';
 import './product.css'
+import { CartContext } from '../context/Cart.jsx';
 
 function product() {
     const {productId} = useParams();
+    const {addToCartContext} = useContext(CartContext);
 
     const getProduct = async() => {
         const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/products/${productId}`);
         return data.product;
     }
+    const addToCart = async (productId) => {
+        const res = await addToCartContext(productId);
+        return res;
+    }
 
-    const {data, isLoading} = useQuery('Product info', getProduct);
+    const {data, isLoading} = useQuery('Product-info', getProduct);
 
     if(isLoading){
         return <Loader />;
     }
-    console.log(data)
   return (
     <div className='container'>
         <div className='row mt-5'>
@@ -35,20 +40,21 @@ function product() {
                         width: 1200,
                         height: 1800
                     },
-                    isHintEnabled:'ture',
+                    isHintEnabled:true,
                     enlargedImagePosition:'over'
                 }} />
             </div>
-            <div className='info col-lg-9'>
+            <div className='info col-lg-9 pt-4'>
                 <h2>{data.name}</h2>
                 <p className={data.status == "Active" ? 'avaliable fs-4' : 'text-danger fs-4'}>{data.status}</p>
                 <h3>{`${data.price}$`}</h3>
                 <p className='fs-5'>{data.description}</p>
+                <button className='btn btn-primary' onClick={() => {addToCart(data._id)}}>Add to Cart</button>
             </div>
         </div>
         <div className='row mt-5'>
         {data.subImages.map((image) => 
-        <div className='col-lg-4 text-center'>
+        <div className='col-lg-4 text-center' key={image.public_id}>
             <ReactImageMagnify {...{
                     smallImage: {
                         alt: 'product image',
@@ -60,7 +66,7 @@ function product() {
                         width: 1200,
                         height: 1800
                     },
-                    isHintEnabled:'ture',
+                    isHintEnabled:true,
                     enlargedImagePosition:'over'
                 }} />
         </div>)}

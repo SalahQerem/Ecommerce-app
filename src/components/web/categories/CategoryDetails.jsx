@@ -22,12 +22,12 @@ function CategoryDatails() {
 
   return (
     <div className='container'>
-        <div className='row products'>
+        <div className='row mt-4 text-center'>
             {data.length ? data.map((product) => 
             <div className='product col-lg-2' key={product._id}>
-                <Link to={`/product/${product._id}`}>
-                    <img src={product.mainImage.secure_url} alt="product image" />
-                    <h2 className='fs-5'>{product.name}</h2>
+                <Link to={`/product/${product._id}`} className='text-decoration-none'>
+                    <img src={product.mainImage.secure_url} alt="product image" className='img-fluid'/>
+                    <h2 className='fs-5 text-black pt-2'>{product.name}</h2>
                 </Link>
             </div>
             ) : <h2>No Products</h2>}
