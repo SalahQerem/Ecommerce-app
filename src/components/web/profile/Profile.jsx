@@ -3,7 +3,6 @@ import { UserContext } from '../context/user.jsx'
 
 function Profile() {
     const {userData} = useContext(UserContext);
-    console.log(userData);
   return (
     <div className='container'>
         <div className='row mt-5'>

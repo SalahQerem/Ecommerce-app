@@ -29,20 +29,7 @@ function product() {
     <div className='container'>
         <div className='row mt-5'>
             <div className='images col-lg-3 text-center'>
-                <ReactImageMagnify {...{
-                    smallImage: {
-                        alt: 'product image',
-                        isFluidWidth: true,
-                        src: `${data.mainImage.secure_url}`
-                    },
-                    largeImage: {
-                        src: `${data.mainImage.secure_url}`,
-                        width: 1200,
-                        height: 1800
-                    },
-                    isHintEnabled:true,
-                    enlargedImagePosition:'over'
-                }} />
+                <img src={data.mainImage.secure_url} alt="product image" className='img-fluid w-100' />
             </div>
             <div className='info col-lg-9 pt-4'>
                 <h2>{data.name}</h2>
@@ -55,20 +42,7 @@ function product() {
         <div className='row mt-5'>
         {data.subImages.map((image) => 
         <div className='col-lg-4 text-center' key={image.public_id}>
-            <ReactImageMagnify {...{
-                    smallImage: {
-                        alt: 'product image',
-                        isFluidWidth: true,
-                        src: `${image.secure_url}`
-                    },
-                    largeImage: {
-                        src: `${image.secure_url}`,
-                        width: 1200,
-                        height: 1800
-                    },
-                    isHintEnabled:true,
-                    enlargedImagePosition:'over'
-                }} />
+            <img src={image.secure_url} alt="product image" className='img-fluid w-100' />
         </div>)}
         </div>
     </div>
