@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom'
 import Loader from '../../pages/Loader.jsx';
-import ReactImageMagnify from 'react-image-magnify';
 import './product.css'
 import { CartContext } from '../context/Cart.jsx';
 
