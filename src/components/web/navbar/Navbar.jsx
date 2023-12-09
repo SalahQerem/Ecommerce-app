@@ -4,7 +4,7 @@ import './navbar.css'
 import { UserContext } from '../context/user.jsx';
 
 function Navbar () {
-  let {userToken, setUserToken, userData, setUserData} = useContext(UserContext);
+  let {userToken, setUserToken, userData, setUserData, cartCount} = useContext(UserContext);
   const navigate = useNavigate();
 
   const logout = () => {
@@ -38,7 +38,7 @@ function Navbar () {
           <a className="nav-link" href="#">Products</a>
           </li> 
           {userToken ?<li className="nav-item">
-          <Link className="nav-link" to={"/cart"}>Cart</Link>
+          <Link className="nav-link" to={"/cart"}>Cart ({cartCount})</Link>
           </li> : <></>}
        
         </ul>

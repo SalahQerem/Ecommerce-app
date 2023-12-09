@@ -51,21 +51,21 @@ function ResetPassword() {
       type: "email",
       name: "email",
       title: "Email",
-      value: "formik.values.email",
+      value: formik.values.email,
     },
     {
       id: "password",
       type: "password",
       name: "password",
       title: "Password",
-      value: "formik.values.password",
+      value: formik.values.password,
     },
     {
       id: "code",
       type: "text",
       name: "code",
       title: "Code",
-      value: "formik.values.code",
+      value: formik.values.code,
     },
   ];
 
