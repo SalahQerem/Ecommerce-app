@@ -13,6 +13,8 @@ import DachboredCategories from '../components/dashbored/categories/Categories.j
 import ProtectedRoute from "../components/web/protectedRoute/ProtectedRoute.jsx";
 import Auth from "../components/web/protectedRoute/Auth.jsx";
 import Profile from "../components/web/profile/Profile.jsx";
+import ResetPassword from "../components/web/resetPassword/ResetPassword.jsx";
+import SendCode from "../components/web/sendCode/SendCode.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -57,6 +59,14 @@ export const router = createBrowserRouter([
           element: <ProtectedRoute>
             <Profile />
           </ProtectedRoute>
+        },
+        {
+          path: 'user/sendcode',
+          element: <SendCode />
+        },
+        {
+          path: 'user/resetpassword',
+          element: <ResetPassword />
         },
         {
           path:'*',

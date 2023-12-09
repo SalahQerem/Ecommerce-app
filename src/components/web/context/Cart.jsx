@@ -1,10 +1,11 @@
 import axios from "axios";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 
 export const CartContext = createContext(null);
 
 export function CartContextProvider({ children }) {
+
   const addToCartContext = async (productId) => {
     try {
       const userToken = localStorage.getItem("userToken");
@@ -56,6 +57,7 @@ export function CartContextProvider({ children }) {
       console.log(error);
     }
   };
+
   return (
     <CartContext.Provider value={{ addToCartContext, getCartContext, removeItemContext }}>
       {children}

@@ -7,6 +7,8 @@ import Loader from "../../pages/Loader.jsx";
 function Cart() {
   const { getCartContext, removeItemContext } = useContext(CartContext);
 
+  let[cart, setCart] = useState(null);
+
   const getCart = async () => {
     const res = await getCartContext();
     return res;
@@ -14,12 +16,11 @@ function Cart() {
 
   const removeFromCart = async (productId) => {
     const res = await removeItemContext(productId);
-    getCart;
+    setCart(res.cart.products);
     return res;
   }
 
   const { data, isLoading } = useQuery("get_cart", getCart);
-  console.log(data);
 
   if (isLoading) {
     return <Loader />;
