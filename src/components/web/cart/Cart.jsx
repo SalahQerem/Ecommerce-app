@@ -6,21 +6,23 @@ import Loader from "../../pages/Loader.jsx";
 
 function Cart() {
   const { getCartContext, removeItemContext } = useContext(CartContext);
-
-  let[cart, setCart] = useState(null);
+  let [cart, setCart] = useState(null);
 
   const getCart = async () => {
     const res = await getCartContext();
+    setCart(res.products);
     return res;
   };
 
-  const removeFromCart = async (productId) => {
-    const res = await removeItemContext(productId);
-    setCart(res.cart.products);
+  const removeFromCart = async (product_Id) => {
+    const res = await removeItemContext(product_Id);
+    if(res.message == 'success') {
+      setCart(cart.filter((product) => {return product.productId != product_Id}))
+    }
     return res;
   }
 
-  const { data, isLoading } = useQuery("get_cart", getCart);
+  const { isLoading } = useQuery("get_cart", getCart);
 
   if (isLoading) {
     return <Loader />;
@@ -46,7 +48,7 @@ function Cart() {
                 <h2>Subtotal</h2>
               </div>
             </div>
-            {data?.products.length ? data.products.map((product) => {
+            {cart ? cart.map((product) => {
                 return <div className="item" key={product.details._id}>
                 <div className="product-info">
                   <img src={product.details.mainImage.secure_url} alt="product image" className="img-fluid"/>

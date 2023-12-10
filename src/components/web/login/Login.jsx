@@ -7,9 +7,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/user.jsx";
+import Loader from "../../pages/Loader.jsx";
 
 function Login() {
-  let { setUserToken } = useContext(UserContext);
+  let { setUserToken, loading } = useContext(UserContext);
   const navigate = useNavigate();
   const initialValues = {
     email: "",
@@ -74,6 +75,10 @@ function Login() {
       onBlur={formik.handleBlur}
     />
   ));
+
+  if(loading){
+    return <Loader />
+  }
 
   return (
     <div className="content container d-flex align-items-center justify-content-center">

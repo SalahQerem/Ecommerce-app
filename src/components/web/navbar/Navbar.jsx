@@ -38,7 +38,7 @@ function Navbar () {
           <a className="nav-link" href="#">Products</a>
           </li> 
           {userToken ?<li className="nav-item">
-          <Link className="nav-link" to={"/cart"}>Cart ({cartCount})</Link>
+          <Link className="nav-link" to={"/cart"}>Cart <span className='badge bg-info'>{cartCount}</span></Link>
           </li> : <></>}
        
         </ul>
@@ -55,7 +55,7 @@ function Navbar () {
             <li><Link className="dropdown-item" to='/login'>Login</Link></li>
           </> : 
           <>
-            <li><Link className="dropdown-item" to={`/user/profile/${userData != null ? userData.user._id : ''}`}>Profile</Link></li>
+            <li><Link className="dropdown-item" to={`/user/profile`}>Profile</Link></li>
             <li><hr className="dropdown-divider" /></li>
             <li><Link className="dropdown-item" onClick={logout}>Logout</Link></li>
           </>

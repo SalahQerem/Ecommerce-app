@@ -1,10 +1,13 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { UserContext } from "./user.jsx";
 
 export const CartContext = createContext(null);
 
 export function CartContextProvider({ children }) {
+
+  let {cartCount, setCartCount} = useContext(UserContext);
 
   const addToCartContext = async (productId) => {
     try {
@@ -26,6 +29,7 @@ export function CartContextProvider({ children }) {
           theme: "light",
         });
       }
+      setCartCount(cartCount++);
       return data;
     } catch (error) {
       console.log(error);
@@ -38,6 +42,7 @@ export function CartContextProvider({ children }) {
       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
         headers: { Authorization: `Tariq__${userToken}` },
       });
+      setCartCount(data.count);
       return data;
     } catch (error) {
       console.log(error);
@@ -52,6 +57,7 @@ export function CartContextProvider({ children }) {
         { productId },
         { headers: { Authorization: `Tariq__${userToken}` } }
       );
+      setCartCount(cartCount--);
       return data;
     } catch (error) {
       console.log(error);
