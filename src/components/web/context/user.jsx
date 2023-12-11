@@ -49,6 +49,7 @@ export function UserContextProvider({ children }) {
         cartCount,
         setCartCount,
         loading,
+        setLoading
       }}
     >
       {children}
