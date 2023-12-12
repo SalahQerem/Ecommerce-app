@@ -20,3 +20,9 @@ export const resetPasswordSchema = yup.object({
 export const sendCodeSchema = yup.object({
     email:yup.string().required("Email is required").email(),
 });
+
+export const confirmOrderSchema = yup.object({
+    phone:yup.number().required("Phone is required"),
+    address:yup.string().required("Address is required").min(5, "must be at least 5 characters").max(30, "must be at most 30 characters"),
+    couponName:yup.string().min(5, "must be 5 characters").max(5, "must be 5 characters"),
+})

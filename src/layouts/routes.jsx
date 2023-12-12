@@ -17,6 +17,9 @@ import ResetPassword from "../components/web/resetPassword/ResetPassword.jsx";
 import SendCode from "../components/web/sendCode/SendCode.jsx";
 import UserInfo from "../components/web/profile/UserInfo.jsx";
 import UserContact from "../components/web/profile/UserContact.jsx";
+import Order from "../components/web/order/Order.jsx";
+import CreateOrder from "../components/web/createOrder/CreateOrder.jsx";
+import Orders from "../components/web/profile/Orders.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -75,11 +78,23 @@ export const router = createBrowserRouter([
             path: "contact",
             element: <UserContact />,
           },
+          {
+            path: "orders",
+            element: <Orders />,
+          },
         ],
       },
       {
         path: "user/sendcode",
         element: <SendCode />,
+      },
+      {
+        path: "order",
+        element: <Order />,
+      },
+      {
+        path: "order/confirm",
+        element: <CreateOrder />,
       },
       {
         path: "user/resetpassword",

@@ -20,10 +20,13 @@ function Profile() {
         <Link className="nav-link text-black fs-5" to={'contact'}>
           Contact Info
         </Link>
+        <Link className="nav-link text-black fs-5" to={'orders'}>
+          Orders
+        </Link>
       </nav>
       <div className="col-lg-10 row pt-1">
-        <div className={`col-lg-7`}><Outlet /></div>
-        <div className={`${style.userImage} col-lg-5`}>
+        <div className={`col-lg-8`}><Outlet /></div>
+        <div className={`${style.userImage} col-lg-4`}>
           <img
             src={userData != null ? userData.user.image.secure_url : ""}
             alt="personal image"

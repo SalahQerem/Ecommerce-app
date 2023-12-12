@@ -49,7 +49,7 @@ function CartItem({ product }) {
   };
 
   return (
-    <div className="item" key={product.details?._id}>
+    <div className="item">
       <div className="product-info">
         <img
           src={product.details.mainImage.secure_url}

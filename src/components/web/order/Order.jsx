@@ -1,33 +1,22 @@
 import React, { useContext, useEffect } from "react";
-import "./cart.css";
+import { Link } from "react-router-dom";
 import { CartContext } from "../context/Cart.jsx";
 import { useQuery } from "react-query";
 import Loader from "../../pages/Loader.jsx";
-import CartItem from "../../pages/CartItem.jsx";
-import { Link } from "react-router-dom";
+import OrderItem from "../../pages/OrderItem.jsx";
 
-function Cart() {
-  const {
-    getCartContext,
-    clearCart,
-    cart,
-    cartTotal,
-    calculateTotal,
-  } = useContext(CartContext);
+function Order() {
+  const { getCartContext, cartTotal, calculateTotal } = useContext(CartContext);
 
-  const getCart = async () => {
+  const getItems = async () => {
     const res = await getCartContext();
     return res;
   };
 
-  const clearMyCart = async () => {
-    await clearCart();
-  };
-
-  const { isLoading } = useQuery("get_cart", getCart);
+  const { data, isLoading } = useQuery("getOrder", getItems);
 
   useEffect(() => {
-    calculateTotal();
+     calculateTotal();
   }, []);
 
   if (isLoading) {
@@ -54,10 +43,10 @@ function Cart() {
                   <h2>Subtotal</h2>
                 </div>
               </div>
-              {cart ? (
-                cart?.map((product) => {
+              {data ? (
+                data?.products.map((product) => {
                   return (
-                    <CartItem product={product} key={product.details._id} />
+                    <OrderItem product={product} key={product.details._id} />
                   );
                 })
               ) : (
@@ -94,15 +83,9 @@ function Cart() {
                   <span>{`$${cartTotal}`}</span>
                 </div>
                 <div className="checkout">
-                  <Link to={"/order"} className="btn btn-primary w-100">
-                    Checkout
+                  <Link to={"/order/confirm"} className="btn btn-primary w-100">
+                    Confirm
                   </Link>
-                  <button
-                    className="btn btn-primary mt-2"
-                    onClick={clearMyCart}
-                  >
-                    Clear my Cart
-                  </button>
                 </div>
               </div>
             </div>
@@ -113,4 +96,4 @@ function Cart() {
   );
 }
 
-export default Cart;
+export default Order;

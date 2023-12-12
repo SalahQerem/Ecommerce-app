@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { UserContext } from "./user.jsx";
 
@@ -8,7 +8,8 @@ export const CartContext = createContext(null);
 export function CartContextProvider({ children }) {
   let [cart, setCart] = useState(null);
   let [cartTotal, setCartTotal] = useState(0);
-  let { cartCount, setCartCount, setLoading, userToken } = useContext(UserContext);
+  let { cartCount, setCartCount, setLoading, userToken } =
+    useContext(UserContext);
 
   const addToCartContext = async (productId) => {
     try {
@@ -60,6 +61,7 @@ export function CartContextProvider({ children }) {
         { headers: { Authorization: `Tariq__${userToken}` } }
       );
       setCartCount(--cartCount);
+      calculateTotal();
       return data;
     } catch (error) {
       console.log(error);
@@ -71,11 +73,17 @@ export function CartContextProvider({ children }) {
       setLoading(true);
       const userToken = localStorage.getItem("userToken");
       const { data } = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/cart/clear`,{},
+        `${import.meta.env.VITE_API_URL}/cart/clear`,
+        {},
         {
           headers: { Authorization: `Tariq__${userToken}` },
         }
       );
+      if (data.message == "success") {
+        calculateTotal();
+        setCartCount(0);
+        setCart([]);
+      }
       setLoading(false);
       return data;
     } catch (error) {
@@ -114,16 +122,16 @@ export function CartContextProvider({ children }) {
 
   const calculateTotal = async () => {
     const userToken = localStorage.getItem("userToken");
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
-        headers: { Authorization: `Tariq__${userToken}` },
-      });
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
+      headers: { Authorization: `Tariq__${userToken}` },
+    });
     setCart(data.products);
     let total = 0;
     data.products?.map((product) => {
-      total += (product.quantity * product.details.price)
-    })
+      total += product.quantity * product.details.price;
+    });
     setCartTotal(total);
-  }
+  };
 
   return (
     <CartContext.Provider
