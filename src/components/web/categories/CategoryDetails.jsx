@@ -21,7 +21,7 @@ function CategoryDatails() {
     }
 
   return (
-    <div className='container'>
+    <div className='container categories'>
         <div className='row mt-4 text-center'>
             {data.length ? data.map((product) => 
             <div className='product col-lg-2' key={product._id}>

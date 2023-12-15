@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../context/Cart.jsx";
 import { useQuery } from "react-query";
 import Loader from "../../pages/Loader.jsx";
-import OrderItem from "../../pages/OrderItem.jsx";
 
 function Order() {
   const { getCartContext, cartTotal, calculateTotal } = useContext(CartContext);
@@ -16,7 +15,7 @@ function Order() {
   const { data, isLoading } = useQuery("getOrder", getItems);
 
   useEffect(() => {
-     calculateTotal();
+    calculateTotal();
   }, []);
 
   if (isLoading) {
@@ -46,7 +45,28 @@ function Order() {
               {data ? (
                 data?.products.map((product) => {
                   return (
-                    <OrderItem product={product} key={product.details._id} />
+                    <div className="item" key={product.details._id}>
+                      <div className="product-info">
+                        <img
+                          src={product.details.mainImage.secure_url}
+                          alt="product image"
+                          className="img-fluid"
+                        />
+                        <div className="product-details">
+                          <h2>{product.details.name}</h2>
+                          <span>Color:black</span>
+                        </div>
+                      </div>
+                      <div className="quantity">
+                        <button></button>
+                        <span>{product.quantity}</span>
+                        <button></button>
+                      </div>
+                      <div className="price">${product.details.price}</div>
+                      <div className="subtotal">
+                        ${product.quantity * product.details.price}
+                      </div>
+                    </div>
                   );
                 })
               ) : (

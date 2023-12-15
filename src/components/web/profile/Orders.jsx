@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import Loader from "../../pages/Loader.jsx";
 import style from "./profile.module.css";
 import { toast } from "react-toastify";
+import OrderItem from "../../pages/OrderItem.jsx";
 
 function Orders() {
   const userToken = localStorage.getItem("userToken");
@@ -66,20 +67,7 @@ function Orders() {
         <tbody>
           {data.map((order, index) => {
             return (
-              <React.Fragment key={index}>
-                <tr>
-                  <td>{index}</td>
-                  <td>{order.address}</td>
-                  <td>{order.products.length}</td>
-                  <td>{order.status}</td>
-                  <td>{order.createdAt}</td>
-                  <td>{order.couponName ? order.couponName : "without"}</td>
-                  <td>{order.finalPrice}</td>
-                  <td>
-                    <button onClick={() => {cancelOrder(order._id)}} className="btn btn-danger">Cancel Order</button>
-                  </td>
-                </tr>
-              </React.Fragment>
+              <OrderItem order={order} index={index} key={index}/>
             );
           })}
           <tr>

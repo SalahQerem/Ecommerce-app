@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: (
-          <Auth isLoggedIn={localStorage.getItem("userToken") ? true : false}>
+          <Auth>
             <Login />
           </Auth>
         ),

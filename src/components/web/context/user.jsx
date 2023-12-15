@@ -8,6 +8,7 @@ export function UserContextProvider({ children }) {
   let [userData, setUserData] = useState(null);
   let [cartCount, setCartCount] = useState(null);
   let [loading, setLoading] = useState(false);
+  let [isLoggedIn, setLoggedIn] = useState(null);
 
   const getUserData = async () => {
     setLoading(true);
@@ -35,9 +36,18 @@ export function UserContextProvider({ children }) {
     }
   };
 
+  const isLogged = () => {
+    if(userToken){
+      setLoggedIn(true)
+    }else{
+      setLoggedIn(false)
+    }
+  }
+
   useEffect(() => {
     getUserData();
     getCartItems();
+    isLogged();
   }, [userToken]);
 
   return (
@@ -50,7 +60,9 @@ export function UserContextProvider({ children }) {
         cartCount,
         setCartCount,
         loading,
-        setLoading
+        setLoading,
+        isLoggedIn,
+        setLoggedIn,
       }}
     >
       {children}

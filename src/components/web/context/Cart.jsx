@@ -8,12 +8,12 @@ export const CartContext = createContext(null);
 export function CartContextProvider({ children }) {
   let [cart, setCart] = useState(null);
   let [cartTotal, setCartTotal] = useState(0);
-  let { cartCount, setCartCount, setLoading, userToken } =
+  let { cartCount, setCartCount, setLoading } =
     useContext(UserContext);
+  const userToken = localStorage.getItem("userToken");
 
   const addToCartContext = async (productId) => {
     try {
-      const userToken = localStorage.getItem("userToken");
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/cart`,
         { productId },
@@ -40,7 +40,6 @@ export function CartContextProvider({ children }) {
 
   const getCartContext = async () => {
     try {
-      const userToken = localStorage.getItem("userToken");
       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
         headers: { Authorization: `Tariq__${userToken}` },
       });
@@ -54,7 +53,6 @@ export function CartContextProvider({ children }) {
 
   const removeItemContext = async (productId) => {
     try {
-      const userToken = localStorage.getItem("userToken");
       const { data } = await axios.patch(
         `${import.meta.env.VITE_API_URL}/cart/removeItem`,
         { productId },
@@ -71,7 +69,6 @@ export function CartContextProvider({ children }) {
   const clearCart = async () => {
     try {
       setLoading(true);
-      const userToken = localStorage.getItem("userToken");
       const { data } = await axios.patch(
         `${import.meta.env.VITE_API_URL}/cart/clear`,
         {},
@@ -121,7 +118,6 @@ export function CartContextProvider({ children }) {
   };
 
   const calculateTotal = async () => {
-    const userToken = localStorage.getItem("userToken");
     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
       headers: { Authorization: `Tariq__${userToken}` },
     });

@@ -6,10 +6,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/Cart.jsx";
-import style from '../../../assets/css/bgImage.module.css';
+import style from "../../../assets/css/bgImage.module.css";
 
 function CreateOrder() {
   const { clearCart } = useContext(CartContext);
+  const userToken = localStorage.getItem("userToken");
   const navigate = useNavigate();
   const initialValues = {
     phone: "",
@@ -18,7 +19,6 @@ function CreateOrder() {
   };
 
   const onSubmit = async () => {
-    const userToken = localStorage.getItem("userToken");
     const { data } = await axios.post(
       `${import.meta.env.VITE_API_URL}/order`,
       {
@@ -92,23 +92,22 @@ function CreateOrder() {
   return (
     <div className={`${style.mainBg}`}>
       <div className={`${style.overlay}`}>
-      <div className="bg-success bg-gradient p-5 rounded-5">
-        <h2 className="text-center">Confirm Order</h2>
-        <form onSubmit={formik.handleSubmit}>
-          {renderInputs}
-          <div className="d-flex justify-content-between align-items-center">
-            <button
-              className="btn btn-light"
-              type="submit"
-              disabled={!formik.isValid}
-            >
-              Confirm
-            </button>
-          </div>
-        </form>
+        <div className="bg-success bg-gradient p-5 rounded-5">
+          <h2 className="text-center">Confirm Order</h2>
+          <form onSubmit={formik.handleSubmit}>
+            {renderInputs}
+            <div className="d-flex justify-content-between align-items-center">
+              <button
+                className="btn btn-light"
+                type="submit"
+                disabled={!formik.isValid}
+              >
+                Confirm
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-      </div>
-      
     </div>
   );
 }

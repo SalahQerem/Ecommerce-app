@@ -34,3 +34,6 @@
 .category{
     text-align: center;
 }
+.categories{
+    min-height: calc(100vh - 50px);
+}

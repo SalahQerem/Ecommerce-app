@@ -1,5 +1,6 @@
 .cart {
   padding: 20px 0 60px 0;
+  min-height: calc(100vh - 50px);
 }
 
 .cart-items {

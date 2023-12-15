@@ -12,8 +12,8 @@ import "swiper/css/pagination";
 import "./categories.css";
 
 function Categories() {
+  const userToken = localStorage.getItem("userToken");
   const getCategories = async () => {
-    const userToken = localStorage.getItem("userToken");
     const { data } = await axios.get(
       `${import.meta.env.VITE_API_URL}/categories/active?limit=20`,
       { headers: { Authorization: `Tariq__${userToken}` } }
@@ -27,7 +27,7 @@ function Categories() {
   }
 
   return (
-    <div className="container text-center">
+    <div className="categories container text-center">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation

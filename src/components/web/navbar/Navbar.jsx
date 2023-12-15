@@ -5,13 +5,14 @@ import logo from '../../../assets/img/logo.png';
 import { UserContext } from '../context/user.jsx';
 
 function Navbar () {
-  let {userToken, setUserToken, userData, setUserData, cartCount} = useContext(UserContext);
+  let {userToken, setUserToken, userData, setUserData, cartCount, setLoggedIn} = useContext(UserContext);
   const navigate = useNavigate();
 
   const logout = () => {
     localStorage.removeItem("userToken");
     setUserToken(null);
     setUserData(null);
+    setLoggedIn(false)
     navigate("/");
   }
 
