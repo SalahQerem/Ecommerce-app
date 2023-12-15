@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import Input from "../../pages/Input.jsx";
 import { useFormik } from "formik";
-import "../register/register.css";
 import { loginSchema } from "../validation/validation.js";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/user.jsx";
 import Loader from "../../pages/Loader.jsx";
+import style from '../../../assets/css/bgImage.module.css';
 
 function Login() {
   let { setUserToken, loading } = useContext(UserContext);
@@ -81,23 +81,25 @@ function Login() {
   }
 
   return (
-    <div className="content container d-flex align-items-center justify-content-center">
-      <div className="bg-primary-subtle w-50 p-5 rounded-5">
+    <div className={`${style.mainBg}`}>
+      <div className={`${style.overlay}`}>
+      <div className="bg-success bg-gradient p-5 rounded-5">
         <h2 className="text-center">Login</h2>
         <form onSubmit={formik.handleSubmit}>
           {renderInputs}
           <div className="d-flex justify-content-between align-items-center">
-            <button className="btn btn-primary" disabled={!formik.isValid} type="submit">
+            <button className="btn btn-light" disabled={!formik.isValid} type="submit">
               Login
             </button>
             <Link
-              className="text-decoration-none text-black me-2"
+              className="text-decoration-none text-white me-2"
               to={"/user/sendcode"}
             >
               Forget Password ?
             </Link>
           </div>
         </form>
+      </div>
       </div>
     </div>
   );

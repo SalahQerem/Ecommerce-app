@@ -8,7 +8,7 @@ function Profile() {
   const { userData, loading } = useContext(UserContext);
   if (loading) return <Loader />;
   return (
-    <div className="row pt-5">
+    <div className={`${style.profile} row pt-5`}>
       <nav className="nav flex-column col-lg-2 text-center">
         <Link
           className="nav-link text-black active fs-5"

@@ -12,7 +12,7 @@ function Input({id, type='text', name, title, onChange, errors, onBlur, touched}
           onBlur={onBlur} 
           className='form-control rounded-3 w-100'
         />
-        {errors[name] && touched[name] && <p className='text-danger mb-0 ms-auto'>{errors[name]}</p>}
+        {errors[name] && touched[name] && <p className='text-warning mb-0 ms-auto'>{errors[name]}</p>}
     </div>
   )
 }

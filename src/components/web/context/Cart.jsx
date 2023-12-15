@@ -125,7 +125,6 @@ export function CartContextProvider({ children }) {
     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
       headers: { Authorization: `Tariq__${userToken}` },
     });
-    setCart(data.products);
     let total = 0;
     data.products?.map((product) => {
       total += product.quantity * product.details.price;

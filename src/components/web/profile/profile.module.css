@@ -5,3 +5,8 @@
 .table td{
     padding: 5px;
 }
+
+.profile{
+    height: calc(100vh - 56px) !important;
+    width: 100%;
+}

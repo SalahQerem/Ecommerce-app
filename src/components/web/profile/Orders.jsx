@@ -43,7 +43,6 @@ function Orders() {
   };
 
   const { data, isLoading } = useQuery("getOrders", getOrders);
-  console.log(data);
 
   if (isLoading) {
     return <Loader />;

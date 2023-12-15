@@ -2,3 +2,15 @@
     top: 125% !important;
     left: -25px !important;
 }
+
+.navbar{
+    background-color: transparent;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+    color: white !important;
+}
+
+.logo{
+    width: 100px;
+}

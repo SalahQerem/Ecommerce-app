@@ -1,11 +1,11 @@
 import React from "react";
-import "../register/register.css";
 import Input from "../../pages/Input.jsx";
 import { useFormik } from "formik";
 import { resetPasswordSchema } from "../validation/validation.js";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import style from "../../../assets/css/bgImage.module.css";
 
 function ResetPassword() {
   const navigate = useNavigate();
@@ -85,14 +85,15 @@ function ResetPassword() {
     );
   });
   return (
-    <div className="content container d-flex align-items-center justify-content-center">
-      <div className="bg-primary-subtle w-50 p-5 rounded-5">
+    <div className={`${style.mainBg}`}>
+      <div className={`${style.overlay}`}>
+      <div className="bg-success bg-gradient p-5 rounded-5">
         <h2 className="text-center">Reset Password</h2>
         <form onSubmit={formik.handleSubmit}>
           {renderInputs}
           <div className="d-flex justify-content-between align-items-center">
             <button
-              className="btn btn-primary"
+              className="btn btn-light"
               type="submit"
               disabled={!formik.isValid}
             >
@@ -101,6 +102,8 @@ function ResetPassword() {
           </div>
         </form>
       </div>
+      </div>
+      
     </div>
   );
 }

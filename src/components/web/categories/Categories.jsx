@@ -15,7 +15,7 @@ function Categories() {
   const getCategories = async () => {
     const userToken = localStorage.getItem("userToken");
     const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/categories/active?limit=7`,
+      `${import.meta.env.VITE_API_URL}/categories/active?limit=20`,
       { headers: { Authorization: `Tariq__${userToken}` } }
     );
     return data;
@@ -30,9 +30,9 @@ function Categories() {
     <div className="container text-center">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={10}
-        slidesPerView={6.5}
         navigation
+        spaceBetween={5}
+        slidesPerView={4}
         loop={true}
         autoplay={{
           delay: 3000,

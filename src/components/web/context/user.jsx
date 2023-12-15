@@ -19,6 +19,7 @@ export function UserContextProvider({ children }) {
         }
       );
       setUserData(data);
+      return data
     }
     setLoading(false)
   };

@@ -1,7 +1,3 @@
-img{
-    width: 100px;
-    height: 100px;
-}
 .container{
     position: relative;
 }
@@ -15,7 +11,7 @@ img{
     bottom: 0 !important;
 }
 .swiper-pagination-bullet-active{
-    background-color: var(--bs-info);
+    background-color: var(--bs-green);
 }
 .swiper-button-prev:after, .swiper-button-next:after{
     font-size: 20px;
@@ -23,7 +19,7 @@ img{
     position: absolute;
 }
 .swiper-button-prev, .swiper-button-next{
-    background-color: var(--bs-info);
+    background-color: var(--bs-green);
     width: 30px;
     height: 30px;
     display: flex;

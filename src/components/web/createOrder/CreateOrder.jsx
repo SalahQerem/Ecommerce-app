@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import "../register/register.css";
 import Input from "../../pages/Input.jsx";
 import { useFormik } from "formik";
 import { confirmOrderSchema } from "../validation/validation.js";
@@ -7,6 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/Cart.jsx";
+import style from '../../../assets/css/bgImage.module.css';
 
 function CreateOrder() {
   const { clearCart } = useContext(CartContext);
@@ -90,14 +90,15 @@ function CreateOrder() {
     );
   });
   return (
-    <div className="content container d-flex align-items-center justify-content-center">
-      <div className="bg-primary-subtle w-50 p-5 rounded-5">
+    <div className={`${style.mainBg}`}>
+      <div className={`${style.overlay}`}>
+      <div className="bg-success bg-gradient p-5 rounded-5">
         <h2 className="text-center">Confirm Order</h2>
         <form onSubmit={formik.handleSubmit}>
           {renderInputs}
           <div className="d-flex justify-content-between align-items-center">
             <button
-              className="btn btn-primary"
+              className="btn btn-light"
               type="submit"
               disabled={!formik.isValid}
             >
@@ -106,6 +107,8 @@ function CreateOrder() {
           </div>
         </form>
       </div>
+      </div>
+      
     </div>
   );
 }
