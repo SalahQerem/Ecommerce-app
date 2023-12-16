@@ -103,7 +103,7 @@ function Order() {
                   <span>{`$${cartTotal}`}</span>
                 </div>
                 <div className="checkout">
-                  <Link to={"/order/confirm"} className="btn btn-primary w-100">
+                  <Link to={"/order/confirm"} className="btn btn-success w-100">
                     Confirm
                   </Link>
                 </div>

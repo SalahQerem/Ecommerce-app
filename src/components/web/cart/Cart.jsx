@@ -94,11 +94,11 @@ function Cart() {
                   <span>{`$${cartTotal}`}</span>
                 </div>
                 <div className="checkout">
-                  <Link to={"/order"} className="btn btn-primary w-100">
+                  <Link to={"/order"} className="btn btn-success w-100">
                     Checkout
                   </Link>
                   <button
-                    className="btn btn-primary mt-2"
+                    className="btn btn-success mt-2"
                     onClick={clearMyCart}
                   >
                     Clear my Cart
