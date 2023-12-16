@@ -20,7 +20,6 @@ function product() {
     }
 
     const {data, isLoading} = useQuery('Product-info', getProduct);
-
     if(isLoading){
         return <Loader />;
     }
@@ -35,7 +34,7 @@ function product() {
                 <p className={data.status == "Active" ? 'avaliable fs-4' : 'text-danger fs-4'}>{data.status}</p>
                 <h3>{`${data.price}$`}</h3>
                 <p className='fs-5'>{data.description}</p>
-                <button className='btn btn-primary' onClick={() => {addToCart(data._id)}}>Add to Cart</button>
+                <button className='btn btn-success' onClick={() => {addToCart(data._id)}}>Add to Cart</button>
             </div>
         </div>
         <div className='row mt-5'>

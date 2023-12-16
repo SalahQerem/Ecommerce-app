@@ -75,10 +75,10 @@ function Login() {
       onBlur={formik.handleBlur}
     />
   ));
-
   if(loading){
     return <Loader />
   }
+
 
   return (
     <div className={`${style.mainBg}`}>

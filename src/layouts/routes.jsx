@@ -20,6 +20,7 @@ import UserContact from "../components/web/profile/UserContact.jsx";
 import Order from "../components/web/order/Order.jsx";
 import CreateOrder from "../components/web/createOrder/CreateOrder.jsx";
 import Orders from "../components/web/profile/Orders.jsx";
+import Products from "../components/web/products/Products.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: "products/category/:categoryId",
         element: <CategoryDatails />,
+      },
+      {
+        path: "products",
+        element: <Products />,
       },
       {
         path: "product/:productId",

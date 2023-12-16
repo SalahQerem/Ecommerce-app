@@ -5,7 +5,7 @@ function UserInfo() {
     const {userData} = useContext(UserContext);
   return (
     <div>
-      <h2 className="fs-4">{userData != null ? userData.user.role : ""}</h2>
+      <h2 className="fs-4">{userData != null ? userData.user.userName : ""}</h2>
       <p
         className={`${
           userData != null
