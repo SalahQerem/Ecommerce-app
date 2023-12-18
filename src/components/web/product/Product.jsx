@@ -27,7 +27,6 @@ function product() {
     } else {
       setError("");
     }
-    console.log(review)
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/products/${productId}/review`,
