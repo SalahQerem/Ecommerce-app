@@ -15,14 +15,10 @@ function ResetPassword() {
     code: "",
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (values) => {
     const { data } = await axios.patch(
       `${import.meta.env.VITE_API_URL}/auth/forgotPassword`,
-      {
-        email: formik.values.email,
-        password: formik.values.password,
-        code: formik.values.code,
-      }
+      values
     );
     if (data.message == "success") {
       toast.success("Your Password changed", {

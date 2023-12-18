@@ -26,3 +26,8 @@ export const confirmOrderSchema = yup.object({
     address:yup.string().required("Address is required").min(5, "must be at least 5 characters").max(30, "must be at most 30 characters"),
     couponName:yup.string().min(5, "must be 5 characters").max(5, "must be 5 characters"),
 })
+
+export const reviewSchema = yup.object({
+    rating: yup.number().required("Rate is required"),
+    comment: yup.string().required("Comment is required").min(3, "must be at least 3 characters").max(120, "must be at most 120 characters")
+});

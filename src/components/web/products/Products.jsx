@@ -1,14 +1,16 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../pages/Loader.jsx";
 import style from "./Products.module.css";
+import { UserContext } from "../context/user.jsx";
 
 function products() {
   let [products, setProducts] = useState([]);
   let [pages, setPages] = useState([]);
+  let [numOfPages, setNumOfPages] = useState(0);
   let [isLoading, setIsLoading] = useState(true);
+  let { productsPageIndex, setProductsPageIndex } = useContext(UserContext);
 
   const getProducts = async (page) => {
     try {
@@ -17,8 +19,10 @@ function products() {
         `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=3`
       );
       renderPages(Math.ceil(data.total / 3));
+      setNumOfPages(data.total / 3);
       setProducts(data.products);
       setIsLoading(false);
+      setProductsPageIndex(page);
       return data;
     } catch (error) {
       console.log(error);
@@ -46,7 +50,7 @@ function products() {
   };
 
   useEffect(() => {
-    getProducts(1);
+    getProducts(productsPageIndex);
   }, []);
 
   if (isLoading) {
@@ -78,14 +82,28 @@ function products() {
       </div>
       <nav aria-label="Page navigation example" className={`${style.nav}`}>
         <ul className="pagination">
-          <li className="page-item">
-            <a className="page-link text-success" href="#">
+          <li className={`${style.pointer} page-item`}>
+            <a
+              className="page-link text-success"
+              onClick={() => {
+                if (productsPageIndex > 1) {
+                  getProducts(productsPageIndex - 1);
+                }
+              }}
+            >
               Previous
             </a>
           </li>
           {pages}
-          <li className="page-item">
-            <a className="page-link text-success" href="#">
+          <li className={`${style.pointer} page-item`}>
+            <a
+              className="page-link text-success"
+              onClick={() => {
+                if (productsPageIndex < numOfPages) {
+                  getProducts(productsPageIndex + 1);
+                }
+              }}
+            >
               Next
             </a>
           </li>

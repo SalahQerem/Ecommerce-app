@@ -20,7 +20,6 @@ function Register() {
     formData.append("email", user.email);
     formData.append("password", user.password);
     formData.append("image", user.image);
-    console.log(user);
     const { data } = await axios.post(
       `${import.meta.env.VITE_API_URL}/auth/signup`,
       formData

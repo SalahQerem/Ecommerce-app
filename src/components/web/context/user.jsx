@@ -9,6 +9,7 @@ export function UserContextProvider({ children }) {
   let [cartCount, setCartCount] = useState(null);
   let [loading, setLoading] = useState(false);
   let [isLoggedIn, setLoggedIn] = useState(null);
+  let [productsPageIndex, setProductsPageIndex] = useState(1);
 
   const getUserData = async () => {
     setLoading(true);
@@ -20,13 +21,13 @@ export function UserContextProvider({ children }) {
         }
       );
       setUserData(data);
-      return data
+      return data;
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   const getCartItems = async () => {
-    if(userToken){
+    if (userToken) {
       setLoading(true);
       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
         headers: { Authorization: `Tariq__${userToken}` },
@@ -37,12 +38,12 @@ export function UserContextProvider({ children }) {
   };
 
   const isLogged = () => {
-    if(userToken){
-      setLoggedIn(true)
-    }else{
-      setLoggedIn(false)
+    if (userToken) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
     }
-  }
+  };
 
   useEffect(() => {
     getUserData();
@@ -63,6 +64,8 @@ export function UserContextProvider({ children }) {
         setLoading,
         isLoggedIn,
         setLoggedIn,
+        productsPageIndex,
+        setProductsPageIndex,
       }}
     >
       {children}

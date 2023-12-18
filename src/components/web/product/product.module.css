@@ -2,11 +2,15 @@
     color: rgb(5, 170, 88);
 }
 
-.review{
+.shadow{
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1),
     -10px -10px 10px rgba(0, 0, 0, 0.1);
 }
 
 .rate{
     width: fit-content;
+}
+
+.comment:focus-visible{
+    outline: none;
 }

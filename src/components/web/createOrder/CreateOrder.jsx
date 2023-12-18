@@ -18,14 +18,10 @@ function CreateOrder() {
     couponName: "",
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (order) => {
     const { data } = await axios.post(
       `${import.meta.env.VITE_API_URL}/order`,
-      {
-        phone: formik.values.phone,
-        address: formik.values.address,
-        couponName: formik.values.couponName,
-      },
+      order,
       { headers: { Authorization: `Tariq__${userToken}` } }
     );
     if (data.message == "success") {

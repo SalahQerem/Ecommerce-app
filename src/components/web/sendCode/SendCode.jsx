@@ -13,10 +13,10 @@ function SendCode() {
     email: "",
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (email) => {
     const { data } = await axios.patch(
       `${import.meta.env.VITE_API_URL}/auth/sendcode`,
-      { email: formik.values.email }
+      email,
     );
     if ((data.message = "success")) {
       toast.success("Please check your Email", {

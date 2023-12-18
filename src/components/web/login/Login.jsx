@@ -25,6 +25,7 @@ function Login() {
     if (data.message == "success") {
       localStorage.setItem("userToken", data.token);
       setUserToken(data.token);
+      formik.resetForm();
       toast.success("Login successful", {
         position: "top-left",
         autoClose: true,

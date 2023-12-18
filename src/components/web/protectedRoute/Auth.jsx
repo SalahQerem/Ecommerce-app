@@ -4,7 +4,6 @@ import { UserContext } from "../context/user.jsx";
 
 function Auth({ children }) {
   const {isLoggedIn} = useContext(UserContext);
-  console.log(isLoggedIn);
   if (isLoggedIn) {
     return <Navigate to={"/"} />;
   }
