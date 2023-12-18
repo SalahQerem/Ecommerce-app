@@ -27,36 +27,38 @@ function Categories() {
   }
 
   return (
-    <div className="categories container text-center">
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        navigation
-        spaceBetween={5}
-        slidesPerView={4}
-        loop={true}
-        autoplay={{
-          delay: 3000,
-        }}
-        pagination={{
-          clickable: true,
-          el: ".swiper-pagination",
-        }}
-      >
-        {data?.categories.length ? (
-          data?.categories.map((category) => (
-            <SwiperSlide key={category._id}>
-              <Link to={`/products/category/${category._id}`}>
-                <div className="category">
-                  <img src={category.image.secure_url} alt="Category image" />
-                </div>
-              </Link>
-            </SwiperSlide>
-          ))
-        ) : (
-          <h2>No Category founed</h2>
-        )}
-      </Swiper>
-      <div className="swiper-pagination"></div>
+    <div className='categories'>
+      <div className="container text-center">
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          navigation
+          spaceBetween={5}
+          slidesPerView={4}
+          loop={true}
+          autoplay={{
+            delay: 3000,
+          }}
+          pagination={{
+            clickable: true,
+            el: ".swiper-pagination",
+          }}
+        >
+          {data?.categories.length ? (
+            data?.categories.map((category) => (
+              <SwiperSlide key={category._id}>
+                <Link to={`/products/category/${category._id}`}>
+                  <div className="category">
+                    <img src={category.image.secure_url} alt="Category image" />
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))
+          ) : (
+            <h2>No Category founed</h2>
+          )}
+        </Swiper>
+        <div className="swiper-pagination"></div>
+      </div>
     </div>
   );
 }

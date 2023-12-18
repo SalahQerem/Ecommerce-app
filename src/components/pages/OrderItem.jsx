@@ -47,7 +47,7 @@ function OrderItem({ order, index }) {
               cancelOrder(order._id);
             }}
             className="btn btn-warning"
-            disabled={orderStatus == 'cancelled'}
+            disabled={orderStatus == 'cancelled' || orderStatus == 'deliverd'}
           >
             Cancel Order
           </button>

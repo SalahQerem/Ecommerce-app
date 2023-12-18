@@ -1,0 +1,7 @@
+.product{
+    text-align: center;
+}
+
+.category{
+    min-height: calc(100vh - 50px);
+}

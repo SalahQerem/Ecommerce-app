@@ -44,10 +44,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "categories",
-        element: <Categories />,
-      },
-      {
         path: "products/category/:categoryId",
         element: <CategoryDatails />,
       },

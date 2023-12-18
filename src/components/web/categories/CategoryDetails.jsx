@@ -3,7 +3,7 @@ import React from 'react'
 import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom'
 import Loader from '../../pages/Loader.jsx';
-import './category.css'
+import style from './category.module.css'
 
 function CategoryDatails() {
 
@@ -21,7 +21,7 @@ function CategoryDatails() {
     }
 
   return (
-    <div className='container categories'>
+    <div className={`${style.category} container`}>
         <div className='row mt-4 text-center'>
             {data.length ? data.map((product) => 
             <div className='product col-lg-2' key={product._id}>

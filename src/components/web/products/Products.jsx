@@ -16,10 +16,10 @@ function products() {
     try {
       setIsLoading(true);
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=3`
+        `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=4`
       );
-      renderPages(Math.ceil(data.total / 3));
-      setNumOfPages(data.total / 3);
+      renderPages(Math.ceil(data.total / 4));
+      setNumOfPages(data.total / 4);
       setProducts(data.products);
       setIsLoading(false);
       setProductsPageIndex(page);
@@ -62,7 +62,7 @@ function products() {
       <div className="row my-4 text-center w-100">
         {products.length ? (
           products.map((product) => (
-            <div className="product col-lg-2" key={product._id}>
+            <div className="product col-lg-3" key={product._id}>
               <Link
                 to={`/product/${product._id}`}
                 className="text-decoration-none"
@@ -70,7 +70,7 @@ function products() {
                 <img
                   src={product.mainImage.secure_url}
                   alt="product image"
-                  className="img-fluid"
+                  className="img-fluid h-75"
                 />
                 <h2 className="fs-5 text-black pt-2">{product.name}</h2>
               </Link>

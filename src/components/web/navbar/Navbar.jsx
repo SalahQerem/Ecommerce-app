@@ -34,7 +34,7 @@ function Navbar () {
 
 
           <li className="nav-item">
-            <Link className="nav-link" to={"/categories"}>Categories</Link>
+            <a className="nav-link" href='/#categories'>Categories</a>
           </li>
 
 
