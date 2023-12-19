@@ -24,9 +24,9 @@ function CategoryDatails() {
     <div className={`${style.category} container`}>
         <div className='row mt-4 text-center'>
             {data.length ? data.map((product) => 
-            <div className='product col-lg-2' key={product._id}>
+            <div className='product col-lg-3' key={product._id}>
                 <Link to={`/product/${product._id}`} className='text-decoration-none'>
-                    <img src={product.mainImage.secure_url} alt="product image" className='img-fluid'/>
+                    <img src={product.mainImage.secure_url} alt="product image" className='img-fluid h-75'/>
                     <h2 className='fs-5 text-black pt-2'>{product.name}</h2>
                 </Link>
             </div>

@@ -123,7 +123,7 @@ export function CartContextProvider({ children }) {
     });
     let total = 0;
     data.products?.map((product) => {
-      total += product.quantity * product.details.price;
+      total += product.quantity * product.details.finalPrice;
     });
     setCartTotal(total);
   };

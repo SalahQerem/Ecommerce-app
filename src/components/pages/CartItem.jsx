@@ -120,8 +120,8 @@ function CartItem({ product }) {
           </svg>
         </button>
       </div>
-      <div className="price">${product.details.price}</div>
-      <div className="subtotal">${itemQty * product.details.price}</div>
+      <div className="price">${product.details.finalPrice}</div>
+      <div className="subtotal">${itemQty * product.details.finalPrice}</div>
     </div>
   );
 }

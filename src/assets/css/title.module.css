@@ -1,0 +1,10 @@
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content{
+    border-bottom: 2px solid green;
+    padding: 0 20px 5px 0;
+}

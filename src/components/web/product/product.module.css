@@ -14,3 +14,7 @@
 .comment:focus-visible{
     outline: none;
 }
+
+.image{
+    cursor: pointer;
+}
