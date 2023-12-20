@@ -5,6 +5,7 @@
 .products {
     height: calc(100vh - 80px);
     position: relative;
+    margin-top: 35px;
 }
 
 .nav{
@@ -18,4 +19,27 @@
     -moz-transform: translate(-50%, );
     -ms-transform: translate(-50%, );
     -o-transform: translate(-50%, );
+}
+
+.product{
+    position: relative;
+}
+
+.img{
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.discountImg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    transform: translate(-20%, -50%);
+    -webkit-transform: translate(-20%, -30%);
+    -moz-transform: translate(-20%, -50%);
+    -ms-transform: translate(-20%, -50%);
+    -o-transform: translate(-20%, -50%);
 }

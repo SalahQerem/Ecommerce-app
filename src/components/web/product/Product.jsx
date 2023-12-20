@@ -75,7 +75,6 @@ function product() {
   };
 
   const { data, isLoading } = useQuery("Product-info", getProduct);
-  console.log(data);
 
   if (isLoading) {
     return <Loader />;
@@ -126,7 +125,8 @@ function product() {
             <p className="fs-3">
               {data.discount ? (
                 <span>
-                  <span className="d-inline-block me-3 text-decoration-line-through text-danger">{`${data.price}$`}</span>{data.finalPrice}$
+                  <span className="d-inline-block me-3 text-decoration-line-through text-danger">{`${data.price}$`}</span>
+                  {data.finalPrice}$
                 </span>
               ) : (
                 `${data.price}$`
@@ -137,8 +137,9 @@ function product() {
               <div className={`${style.rate} text-center mb-2 ms-5`}>
                 <h3 className="fs-1">{data.ratingNumbers}</h3>
                 <Rating
-                  name="read-only"
-                  value={Number(data.ratingNumbers)}
+                  name="half-rating-read"
+                  defaultValue={Number(data.ratingNumbers)}
+                  precision={0.5}
                   readOnly
                 />
               </div>
@@ -172,6 +173,7 @@ function product() {
               value={Number(formik.values.rating)}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              precision={0.5}
             />
           </div>
           <div>
@@ -221,7 +223,12 @@ function product() {
                     </div>
                     <div className={`text-center my-3`}>
                       <h3 className="fs-1">{review.rating}</h3>
-                      <Rating name="read-only" value={review.rating} readOnly />
+                      <Rating
+                        name="half-rating-read"
+                        defaultValue={review.rating}
+                        precision={0.5}
+                        readOnly
+                      />
                     </div>
                     <div className={`text-center`}>
                       <p className="fs-5">{review.comment}</p>

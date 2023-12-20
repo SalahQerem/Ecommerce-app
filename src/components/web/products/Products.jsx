@@ -3,14 +3,20 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../pages/Loader.jsx";
 import style from "./Products.module.css";
+import { Rating } from "@mui/material";
 import { UserContext } from "../context/user.jsx";
+import { CartContext } from "../context/Cart.jsx";
+import { toast } from "react-toastify";
+import discountImg from "../../../assets/img/discountLogo.png";
 
 function products() {
+  const userToken = localStorage.getItem("userToken");
   let [products, setProducts] = useState([]);
   let [pages, setPages] = useState([]);
   let [numOfPages, setNumOfPages] = useState(0);
   let [isLoading, setIsLoading] = useState(true);
   let { productsPageIndex, setProductsPageIndex } = useContext(UserContext);
+  const { addToCartContext } = useContext(CartContext);
 
   const getProducts = async (page) => {
     try {
@@ -27,6 +33,25 @@ function products() {
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+    }
+  };
+
+  const addToCart = async (productId) => {
+    if (userToken) {
+      const res = await addToCartContext(productId);
+      console.log(res);
+      return res;
+    } else {
+      toast.success("You must have an Account", {
+        position: "top-left",
+        autoClose: true,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -62,18 +87,51 @@ function products() {
       <div className="row my-4 text-center w-100">
         {products.length ? (
           products.map((product) => (
-            <div className="product col-lg-3" key={product._id}>
-              <Link
-                to={`/product/${product._id}`}
-                className="text-decoration-none"
-              >
-                <img
-                  src={product.mainImage.secure_url}
-                  alt="product image"
-                  className="img-fluid h-75"
-                />
-                <h2 className="fs-5 text-black pt-2">{product.name}</h2>
-              </Link>
+            <div className={`col-lg-3`} key={product._id}>
+              <div className={`${style.product} m-auto border p-3`}>
+                <div className={``}>
+                  <Link
+                    to={`/product/${product._id}`}
+                    className="text-decoration-none"
+                  >
+                    <div className={`${style.img}`}>
+                      <img
+                        src={product.mainImage.secure_url}
+                        alt="product image"
+                        className="img-fluid w-75"
+                      />
+                    </div>
+
+                    <h2 className="fs-5 text-black pt-2">{product.name}</h2>
+                  </Link>
+                </div>
+                <div className="d-flex justify-content-between align-items-center border-bottom pb-2">
+                  <button
+                    onClick={() => {
+                      addToCart(product._id);
+                    }}
+                    className="btn btn-success px-3"
+                  >
+                    {" "}
+                    +{" "}
+                  </button>
+                  <Rating
+                    name="half-rating-read"
+                    defaultValue={Number(product.ratingNumbers)}
+                    precision={0.5}
+                    readOnly
+                  />
+                </div>
+                <div className="d-flex justify-content-between align-items-center">
+                  <p className="m-0 fs-4 w-25 ">{product.finalPrice}$</p>
+                  <p className="m-0 fs-5 w-25 ">{product.stock} in Stock</p>
+                </div>
+                {product.discount ? (
+                  <img src={discountImg} className={`${style.discountImg}`} />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           ))
         ) : (
