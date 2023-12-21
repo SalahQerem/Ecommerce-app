@@ -17,6 +17,7 @@ function product() {
   const { addToCartContext } = useContext(CartContext);
   let [error, setError] = useState("");
   let [currentImage, setCurrentImage] = useState("");
+  let [avgRating, setAvgRating] = useState(0);
 
   const initialValues = {
     rating: "0",
@@ -67,14 +68,25 @@ function product() {
       `${import.meta.env.VITE_API_URL}/products/${productId}`
     );
     setCurrentImage(data.product.mainImage.secure_url);
+    calculateAvgRating(data);
     return data.product;
   };
+
   const addToCart = async (productId) => {
     const res = await addToCartContext(productId);
     return res;
   };
 
+  const calculateAvgRating = (data) => {
+    let sum = 0;
+    data.product.reviews.map((review) => {
+      sum += review.rating;
+    });
+    setAvgRating(Math.round((sum / data.product.reviews.length) * 2) / 2);
+  };
+
   const { data, isLoading } = useQuery("Product-info", getProduct);
+  console.log(data);
 
   if (isLoading) {
     return <Loader />;
@@ -135,10 +147,10 @@ function product() {
             <p className="fs-5">{data.description}</p>
             <div className="d-flex justify-content-between">
               <div className={`${style.rate} text-center mb-2 ms-5`}>
-                <h3 className="fs-1">{data.ratingNumbers}</h3>
+                <h3 className="fs-1">{avgRating}</h3>
                 <Rating
                   name="half-rating-read"
-                  defaultValue={Number(data.ratingNumbers)}
+                  value={Number(avgRating)}
                   precision={0.5}
                   readOnly
                 />

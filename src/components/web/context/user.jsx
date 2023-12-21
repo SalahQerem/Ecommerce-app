@@ -10,6 +10,7 @@ export function UserContextProvider({ children }) {
   let [loading, setLoading] = useState(false);
   let [isLoggedIn, setLoggedIn] = useState(null);
   let [productsPageIndex, setProductsPageIndex] = useState(1);
+  let [productsPerPage, setProductsPerPage] = useState(4);
 
   const getUserData = async () => {
     setLoading(true);
@@ -66,6 +67,8 @@ export function UserContextProvider({ children }) {
         setLoggedIn,
         productsPageIndex,
         setProductsPageIndex,
+        productsPerPage,
+        setProductsPerPage
       }}
     >
       {children}

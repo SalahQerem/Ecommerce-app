@@ -13,25 +13,34 @@ function products() {
   const userToken = localStorage.getItem("userToken");
   let [products, setProducts] = useState([]);
   let [pages, setPages] = useState([]);
+  let [productsNumberOptions, setProductsNumberOptions] = useState(4);
   let [numOfPages, setNumOfPages] = useState(0);
   let [isLoading, setIsLoading] = useState(true);
-  let { productsPageIndex, setProductsPageIndex } = useContext(UserContext);
   const { addToCartContext } = useContext(CartContext);
+  let {
+    productsPageIndex,
+    setProductsPageIndex,
+    productsPerPage,
+    setProductsPerPage,
+  } = useContext(UserContext);
 
-  const getProducts = async (page) => {
+  const getProducts = async (page, num = 4) => {
     try {
       setIsLoading(true);
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=4`
+        `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=${num}`
       );
-      renderPages(Math.ceil(data.total / 4));
-      setNumOfPages(data.total / 4);
-      setProducts(data.products);
-      setIsLoading(false);
+      console.log(data);
+      renderPages(Math.ceil(data.total / num));
+      setNumOfPages(data.total / num);
+      renderProductNumberOptions(data.total, num);
       setProductsPageIndex(page);
+      setProductsPerPage(num);
+      setProducts(data.products);
       return data;
     } catch (error) {
       console.log(error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -63,7 +72,7 @@ function products() {
           <a
             className={`page-link text-success`}
             onClick={() => {
-              getProducts(i + 1);
+              getProducts(i + 1, productsPerPage);
             }}
           >
             {i + 1}
@@ -74,8 +83,32 @@ function products() {
     setPages(render);
   };
 
+  const renderProductNumberOptions = (num, page) => {
+    const render = [];
+    for (let i = 1; i <= num; i++) {
+      if (i == page) {
+        render.push(
+          <option value={i} selected key={i}>
+            {i}
+          </option>
+        );
+      } else {
+        render.push(
+          <option value={i} key={i}>
+            {i}
+          </option>
+        );
+      }
+    }
+    setProductsNumberOptions(render);
+  };
+
+  const displayWithNumber = (num) => {
+    getProducts(productsPageIndex, num);
+  };
+
   useEffect(() => {
-    getProducts(productsPageIndex);
+    getProducts(productsPageIndex, productsPerPage);
   }, []);
 
   if (isLoading) {
@@ -83,12 +116,29 @@ function products() {
   }
 
   return (
-    <div className={`${style.products} container`}>
-      <div className="row my-4 text-center w-100">
+    <div className={`container mt-3`}>
+      <div>
+        <select
+          name="productsPerPage"
+          id="productsPerPage"
+          className={`${style.select} form-select border border-success`}
+          onChange={(e) => {
+            displayWithNumber(e.target.value);
+          }}
+        >
+          {productsNumberOptions}
+        </select>
+        <div>
+          <form>
+            
+          </form>
+        </div>
+      </div>
+      <div className="row my-1 text-center w-100">
         {products.length ? (
           products.map((product) => (
             <div className={`col-lg-3`} key={product._id}>
-              <div className={`${style.product} m-auto border p-3`}>
+              <div className={`${style.product} m-auto border p-3 my-4`}>
                 <div className={``}>
                   <Link
                     to={`/product/${product._id}`}
@@ -117,7 +167,7 @@ function products() {
                   </button>
                   <Rating
                     name="half-rating-read"
-                    defaultValue={Number(product.ratingNumbers)}
+                    defaultValue={Number(product.avgRating)}
                     precision={0.5}
                     readOnly
                   />
@@ -138,35 +188,37 @@ function products() {
           <h2>No Products</h2>
         )}
       </div>
-      <nav aria-label="Page navigation example" className={`${style.nav}`}>
-        <ul className="pagination">
-          <li className={`${style.pointer} page-item`}>
-            <a
-              className="page-link text-success"
-              onClick={() => {
-                if (productsPageIndex > 1) {
-                  getProducts(productsPageIndex - 1);
-                }
-              }}
-            >
-              Previous
-            </a>
-          </li>
-          {pages}
-          <li className={`${style.pointer} page-item`}>
-            <a
-              className="page-link text-success"
-              onClick={() => {
-                if (productsPageIndex < numOfPages) {
-                  getProducts(productsPageIndex + 1);
-                }
-              }}
-            >
-              Next
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <div className="position-relative py-5">
+        <nav aria-label="Page navigation example" className={`${style.nav}`}>
+          <ul className="pagination">
+            <li className={`${style.pointer} page-item`}>
+              <a
+                className="page-link text-success"
+                onClick={() => {
+                  if (productsPageIndex > 1) {
+                    getProducts(productsPageIndex - 1, productsPerPage);
+                  }
+                }}
+              >
+                Previous
+              </a>
+            </li>
+            {pages}
+            <li className={`${style.pointer} page-item`}>
+              <a
+                className="page-link text-success"
+                onClick={() => {
+                  if (productsPageIndex < numOfPages) {
+                    getProducts(productsPageIndex + 1, productsPerPage);
+                  }
+                }}
+              >
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }

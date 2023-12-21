@@ -3,7 +3,7 @@
 }
 
 .products {
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     position: relative;
     margin-top: 35px;
 }
@@ -42,4 +42,8 @@
     -moz-transform: translate(-20%, -50%);
     -ms-transform: translate(-20%, -50%);
     -o-transform: translate(-20%, -50%);
+}
+
+.select{
+    width: 60px !important;
 }

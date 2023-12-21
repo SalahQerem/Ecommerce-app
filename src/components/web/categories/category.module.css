@@ -1,7 +1,19 @@
-.product{
-    text-align: center;
-}
-
 .category{
     min-height: calc(100vh - 50px);
+}
+
+.product{
+    position: relative;
+}
+
+.discountImg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    transform: translate(-20%, -50%);
+    -webkit-transform: translate(-20%, -30%);
+    -moz-transform: translate(-20%, -50%);
+    -ms-transform: translate(-20%, -50%);
+    -o-transform: translate(-20%, -50%);
 }
