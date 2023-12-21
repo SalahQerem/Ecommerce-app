@@ -24,7 +24,6 @@ function CategoryDatails() {
   const addToCart = async (productId) => {
     if (userToken) {
       const res = await addToCartContext(productId);
-      console.log(res);
       return res;
     } else {
       toast.success("You must have an Account", {

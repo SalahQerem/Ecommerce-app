@@ -86,7 +86,6 @@ function product() {
   };
 
   const { data, isLoading } = useQuery("Product-info", getProduct);
-  console.log(data);
 
   if (isLoading) {
     return <Loader />;

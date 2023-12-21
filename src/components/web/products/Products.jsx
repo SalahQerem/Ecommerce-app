@@ -30,7 +30,6 @@ function products() {
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=${num}`
       );
-      console.log(data);
       renderPages(Math.ceil(data.total / num));
       setNumOfPages(data.total / num);
       renderProductNumberOptions(data.total, num);
@@ -48,7 +47,6 @@ function products() {
   const addToCart = async (productId) => {
     if (userToken) {
       const res = await addToCartContext(productId);
-      console.log(res);
       return res;
     } else {
       toast.success("You must have an Account", {
