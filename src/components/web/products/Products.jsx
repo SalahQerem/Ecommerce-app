@@ -14,7 +14,6 @@ function products() {
   let [products, setProducts] = useState([]);
   let [pages, setPages] = useState([]);
   let [productsNumberOptions, setProductsNumberOptions] = useState(4);
-  let [numOfPages, setNumOfPages] = useState(0);
   let [isLoading, setIsLoading] = useState(true);
   const { addToCartContext } = useContext(CartContext);
   let {
@@ -24,17 +23,14 @@ function products() {
     setProductsPerPage,
   } = useContext(UserContext);
 
-  const getProducts = async (page, num = 4) => {
+  const getProducts = async (page, num) => {
     try {
       setIsLoading(true);
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=${num}`
       );
       renderPages(Math.ceil(data.total / num));
-      setNumOfPages(data.total / num);
       renderProductNumberOptions(data.total, num);
-      setProductsPageIndex(page);
-      setProductsPerPage(num);
       setProducts(data.products);
       return data;
     } catch (error) {
@@ -102,12 +98,13 @@ function products() {
   };
 
   const displayWithNumber = (num) => {
-    getProducts(productsPageIndex, num);
+    setProductsPageIndex(productsPageIndex);
+    setProductsPerPage(num);
   };
 
   useEffect(() => {
     getProducts(productsPageIndex, productsPerPage);
-  }, []);
+  }, [productsPageIndex, productsPerPage]);
 
   if (isLoading) {
     return <Loader />;
@@ -127,9 +124,7 @@ function products() {
           {productsNumberOptions}
         </select>
         <div>
-          <form>
-            
-          </form>
+          <form></form>
         </div>
       </div>
       <div className="row my-1 text-center w-100">
@@ -194,7 +189,7 @@ function products() {
                 className="page-link text-success"
                 onClick={() => {
                   if (productsPageIndex > 1) {
-                    getProducts(productsPageIndex - 1, productsPerPage);
+                    setProductsPageIndex(productsPageIndex - 1);
                   }
                 }}
               >
@@ -206,8 +201,8 @@ function products() {
               <a
                 className="page-link text-success"
                 onClick={() => {
-                  if (productsPageIndex < numOfPages) {
-                    getProducts(productsPageIndex + 1, productsPerPage);
+                  if (productsPageIndex < pages.length) {
+                    setProductsPageIndex(productsPageIndex + 1);
                   }
                 }}
               >
