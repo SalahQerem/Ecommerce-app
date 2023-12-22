@@ -13,6 +13,7 @@ function products() {
   const userToken = localStorage.getItem("userToken");
   let [products, setProducts] = useState([]);
   let [pages, setPages] = useState([]);
+  let [numOfProducts, setNumOfProducts] = useState(0);
   let [productsNumberOptions, setProductsNumberOptions] = useState(4);
   let [isLoading, setIsLoading] = useState(true);
   const { addToCartContext } = useContext(CartContext);
@@ -26,9 +27,13 @@ function products() {
   const getProducts = async (page, num) => {
     try {
       setIsLoading(true);
+      if(numOfProducts > 0 && (page + 1) * num > numOfProducts){
+        page = Math.ceil(numOfProducts / num);
+      }
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=${num}`
       );
+      setNumOfProducts(data.total);
       renderPages(Math.ceil(data.total / num));
       renderProductNumberOptions(data.total, num);
       setProducts(data.products);
