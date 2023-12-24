@@ -31,3 +31,12 @@ export const reviewSchema = yup.object({
     rating: yup.number().required("Rate is required"),
     comment: yup.string().required("Comment is required").min(3, "must be at least 3 characters").max(120, "must be at most 120 characters")
 });
+
+export const filterProductsSchema = yup.object({
+    min: yup.number(),
+    max: yup.number(),
+});
+
+export const searchProductsSchema = yup.object({
+    name: yup.string(),
+});

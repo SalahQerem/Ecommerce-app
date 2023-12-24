@@ -8,6 +8,11 @@ import { UserContext } from "../context/user.jsx";
 import { CartContext } from "../context/Cart.jsx";
 import { toast } from "react-toastify";
 import discountImg from "../../../assets/img/discountLogo.png";
+import { useFormik } from "formik";
+import {
+  filterProductsSchema,
+  searchProductsSchema,
+} from "../validation/validation.js";
 
 function products() {
   const userToken = localStorage.getItem("userToken");
@@ -27,7 +32,7 @@ function products() {
   const getProducts = async (page, num) => {
     try {
       setIsLoading(true);
-      if(numOfProducts > 0 && (page + 1) * num > numOfProducts){
+      if (numOfProducts > 0 && page > Math.ceil(numOfProducts / num)) {
         page = Math.ceil(numOfProducts / num);
       }
       const { data } = await axios.get(
@@ -107,6 +112,96 @@ function products() {
     setProductsPerPage(num);
   };
 
+  const filterInitialValues = {
+    min: 0,
+    max: Number.MAX_SAFE_INTEGER,
+  };
+
+  const onSubmit = async (conditions) => {
+    filterFormik.resetForm();
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/products?page=1&limit=${
+          Number.MAX_SAFE_INTEGER
+        }`
+      );
+      const filterd = data.products.filter((product) => {
+        return (
+          product.finalPrice >= conditions.min &&
+          product.finalPrice <= conditions.max
+        );
+      });
+      setProducts(filterd);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filterFormik = useFormik({
+    initialValues: filterInitialValues,
+    onSubmit,
+    validationSchema: filterProductsSchema,
+  });
+
+  const inputs = [
+    {
+      id: "min",
+      type: "number",
+      name: "min",
+      title: "Min",
+      value: filterFormik.values.min,
+    },
+    {
+      id: "max",
+      type: "number",
+      name: "max",
+      title: "Max",
+      value: filterFormik.values.min,
+    },
+  ];
+
+  const renderInputs = inputs.map((input, index) => (
+    <input
+      id={input.id}
+      type={input.type}
+      name={input.name}
+      title={input.title}
+      key={index}
+      onChange={filterFormik.handleChange}
+      onBlur={filterFormik.handleBlur}
+      placeholder={input.title}
+      className="form-control mx-2"
+    />
+  ));
+
+  const searchInitialValues = {
+    name: "",
+  };
+
+  const search = async (event) => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/products?page=1&limit=${
+          Number.MAX_SAFE_INTEGER
+        }`
+      );
+      const filterd = data.products.filter((product) => {
+        return (
+          product.name.startsWith(event.target.value)
+        );
+      });
+      setProducts(filterd);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const searchFormik = {
+    initialValues: searchInitialValues,
+    onSubmit: search,
+    validationSchema: searchProductsSchema,
+  };
+
   useEffect(() => {
     getProducts(productsPageIndex, productsPerPage);
   }, [productsPageIndex, productsPerPage]);
@@ -117,7 +212,7 @@ function products() {
 
   return (
     <div className={`container mt-3`}>
-      <div>
+      <div className="d-flex align-items-center justify-content-around mb-3">
         <select
           name="productsPerPage"
           id="productsPerPage"
@@ -128,8 +223,30 @@ function products() {
         >
           {productsNumberOptions}
         </select>
+        <div className="w-50 d-flex align-items-center justify-content-between">
+          <form
+            onSubmit={filterFormik.handleSubmit}
+            className="d-flex justify-content-between align-items-center w-100 ms-2"
+          >
+            {renderInputs}
+            <button type="submit" className="btn btn-success ms-1">
+              Search
+            </button>
+          </form>
+        </div>
         <div>
-          <form></form>
+          <form onSubmit={searchFormik.handleSubmit}>
+            <input
+              id='name'
+              type='text'
+              name='name'
+              title='name'
+              onChange={search}
+              onBlur={searchFormik.handleBlur}
+              placeholder='Search by Name'
+              className="form-control mx-2"
+            />
+          </form>
         </div>
       </div>
       <div className="row my-1 text-center w-100">

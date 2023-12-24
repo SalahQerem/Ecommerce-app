@@ -68,7 +68,7 @@ export function UserContextProvider({ children }) {
         productsPageIndex,
         setProductsPageIndex,
         productsPerPage,
-        setProductsPerPage
+        setProductsPerPage,
       }}
     >
       {children}
