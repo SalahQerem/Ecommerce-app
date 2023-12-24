@@ -27,7 +27,7 @@ function products() {
   const getProducts = async (page, num) => {
     try {
       setIsLoading(true);
-      if(numOfProducts > 0 && (page + 1) * num > numOfProducts){
+      if (numOfProducts > 0 && page > Math.ceil(numOfProducts / num)) {
         page = Math.ceil(numOfProducts / num);
       }
       const { data } = await axios.get(
